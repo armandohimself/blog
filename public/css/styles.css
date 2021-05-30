@@ -1,3 +1,12 @@
+/* ID */
+
+/* ELEMENTS */
+li {
+    padding: 0px 15px;
+}
+
+/* CLASSES */
+
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;

@@ -1,0 +1,18 @@
+<%- include('partials/header'); -%>
+
+<h1>Compose</h1>
+
+<form method="POST" action="/compose">
+<input type="text" name="compose">
+<button type="submit">Publish</button>
+</form>
+
+<br><br>
+<h2>Messages</h2>
+<ul>
+    <% for(var i=0; i < composeArr.length; i++) { %>
+        <li><%= composeArr[i] %></li>
+    <% } %>
+</ul>
+
+<%- include('partials/footer'); -%>
