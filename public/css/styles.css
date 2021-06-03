@@ -5,7 +5,15 @@ li {
     padding: 0px 15px;
 }
 
+
 /* CLASSES */
+.bold {
+    font-weight: 600;
+}
+
+.full-width {
+    width: 100%;
+}
 
 .container-fluid {
     padding-top: 70px;

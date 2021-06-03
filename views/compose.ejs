@@ -1,18 +1,14 @@
 <%- include('partials/header'); -%>
 
-<h1>Compose</h1>
+<h2>Compose</h2>
+<br>
 
 <form method="POST" action="/compose">
-<input type="text" name="compose">
+<label class="bold" for="Title">Title</label> <br>
+<input class="full-width" type="text" name="title"> <br>
+<label class="bold" for="Post">Post</label> <br>
+<textarea class="full-width" name="post" cols="30" rows="10"></textarea> <br> <br>
 <button type="submit">Publish</button>
 </form>
-
-<br><br>
-<h2>Messages</h2>
-<ul>
-    <% for(var i=0; i < composeArr.length; i++) { %>
-        <li><%= composeArr[i] %></li>
-    <% } %>
-</ul>
 
 <%- include('partials/footer'); -%>
