@@ -1,6 +1,7 @@
 const express = require("express");
 let ejs = require("ejs");
 const { static } = require("express");
+const _ = require('lodash');
 
 const app = express();
 
@@ -48,23 +49,21 @@ app.post("/compose", function(req, res) {
 });
 
 app.get("/posts/:data", function(req, res) {
-    console.log("req.param is:", req.params.data);
-    const URLparam = req.params.data
+    const URLparam = _.lowerCase(req.params.data);
+    console.log("You in posts/:data fam: ", URLparam);
+    
     postsArr.forEach(function(post) {
-        if (post.title === URLparam) {
+      const postTitle = _.lowerCase(post.title);
+
+        if (postTitle === URLparam) {
             console.log("Match was found");
+            res.render("post", {postTitle: post.title, postBody: post.post});
         }
         else {
             console.warn("Not a match");
+            res.redirect("/");
         }
     });
-    // grab the parameter value
-    // grab the post array
-    // iterate through the array of object's titles until you find a match
-    // IF match yes
-    // ELSE boo
-
-    res.redirect("/");
 });
 
 app.listen(3000, function(req, res) {
