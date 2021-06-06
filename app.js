@@ -33,18 +33,39 @@ app.get("/contact", function(req, res) {
 
 app.get("/compose", function(req, res) {
     res.render('compose', {postsArr: postsArr});
+    console.log(req.params.var);
 });
 
 app.post("/compose", function(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     const postObj = {
         title: req.body.title, 
         post: req.body.post
     }
     postsArr.push(postObj);
-    console.log(postsArr);
+    //console.log(postsArr);
     res.redirect("/");
-})
+});
+
+app.get("/posts/:data", function(req, res) {
+    console.log("req.param is:", req.params.data);
+    const URLparam = req.params.data
+    postsArr.forEach(function(post) {
+        if (post.title === URLparam) {
+            console.log("Match was found");
+        }
+        else {
+            console.warn("Not a match");
+        }
+    });
+    // grab the parameter value
+    // grab the post array
+    // iterate through the array of object's titles until you find a match
+    // IF match yes
+    // ELSE boo
+
+    res.redirect("/");
+});
 
 app.listen(3000, function(req, res) {
     console.log("Server started on PORT 3000");
