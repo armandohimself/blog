@@ -28,8 +28,9 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 
 //create a new model object called fruit and add in it's property's info
 const fruit = new Fruit({
-    rating: 5, 
-    review: "Want to add a banana"
+    name: "Peaches",
+    rating: 10, 
+    review: "Adding a peach"
 });
 
 //save info to db
@@ -50,25 +51,26 @@ const person = new Person({
 
 //person.save();
 
+
 //Retrieve data from DB
-Fruit.find(function(err, fruits) {
-    if(err) {
-        console.log("OMG Error");
-    } else {
+// Fruit.find(function(err, fruits) {
+//     if(err) {
+//         console.log("OMG Error");
+//     } else {
 
-        //close connection to db once you're done for good practice
-        mongoose.connection.close(function(err) {
-            if(err) {
-                console.log("Something went wrong trying to close the connection to DB");
-            } else {
-                console.log("Closed the connection the the DB successful!");
-            }
-        });
+//         //close connection to db once you're done for good practice
+//         mongoose.connection.close(function(err) {
+//             if(err) {
+//                 console.log("Something went wrong trying to close the connection to DB");
+//             } else {
+//                 console.log("Closed the connection the the DB successful!");
+//             }
+//         });
 
-        fruits.forEach(fruit => console.log(fruit.name));
-        //console.log(fruits);
-    }
-});
+//         fruits.forEach(fruit => console.log(fruit.name));
+//         console.log(fruits);
+//     }
+// });
 /** You can tap into the find method from our Fruit model we created. Think of this like
  * your collection. Then you give the find method a callback and pass over an err for errors
  * and an arbitrary name for the thing you are trying to return. In our case, it's a bunch of
@@ -76,16 +78,39 @@ Fruit.find(function(err, fruits) {
  */
 
 //updating one record in the mongo DB
-Fruit.updateOne({_id: "60c7b249b19ae02a238117d8"}, {name: "Banana"}, function(err) {
-    if (err) {
-        console.log("There was an error updating Fruit");
-    } else {
-        console.log("Updated Fruit successfully!");
-    }
-});
+// Fruit.updateOne({_id: "60c7b249b19ae02a238117d8"}, {name: "Banana"}, function(err) {
+//     if (err) {
+//         console.log("There was an error updating Fruit");
+//     } else {
+//         console.log("Updated Fruit successfully!");
+//     }
+// });
 /** First parameter is the query/record you're targeting, then it's the property, finally the callback */
 
+//delete one from DB
+// Fruit.deleteOne({_id: "60ceb63554cdda52dc8d6bc9"}, function(err) {
+//     if (err) {
+//         console.log("There was an error deleting Fruit");
+//     } else {
+//         console.log("Deletion of Fruit successfully!");
+//         //close connection to db once you're done for good practice
+//         mongoose.connection.close(function(err) {
+//             if(err) {
+//                 console.log("Something went wrong trying to close the connection to DB");
+//             } else {
+//                 console.log("Closed the connection the the DB successful!");
+//             }
+//         });
+//     }
+// });
 
+Person.deleteMany({name: "Armando Arteaga"}, function(err) {
+    if (err) {
+        console.log("There was an error deleting many people");
+    } else {
+        console.log("Sucessfully deleted many people");
+    }
+});
 
 const app = express();
 
