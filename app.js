@@ -2,6 +2,90 @@ const express = require("express");
 let ejs = require("ejs");
 const { static } = require("express");
 const _ = require('lodash');
+const mongoose = require("mongoose");
+
+//connection to local db
+mongoose.connect("mongodb://localhost:27017/fruitsDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+//db schema for a fruit
+const fruitSchema = new mongoose.Schema({
+    name: {
+        type: String, 
+        //required: [true, "A fruit needs a name"],
+    }, 
+    rating: Number, 
+    review: String
+});
+
+//db model
+const Fruit = mongoose.model("Fruit", fruitSchema);
+/* We define the model name (Fruit) and tell mongoose we want to create a model called 
+"Fruit". We then also pass the schema so it knows what the "scafolding will be"
+**/
+
+//create a new model object called fruit and add in it's property's info
+const fruit = new Fruit({
+    rating: 5, 
+    review: "Want to add a banana"
+});
+
+//save info to db
+//fruit.save();
+
+//db schema for a person
+const personSchema = new mongoose.Schema({
+    name: String, 
+    age: Number
+});
+
+const Person = mongoose.model("Person", personSchema);
+
+const person = new Person({
+    name: "Armando Arteaga",
+    age: 28
+});
+
+//person.save();
+
+//Retrieve data from DB
+Fruit.find(function(err, fruits) {
+    if(err) {
+        console.log("OMG Error");
+    } else {
+
+        //close connection to db once you're done for good practice
+        mongoose.connection.close(function(err) {
+            if(err) {
+                console.log("Something went wrong trying to close the connection to DB");
+            } else {
+                console.log("Closed the connection the the DB successful!");
+            }
+        });
+
+        fruits.forEach(fruit => console.log(fruit.name));
+        //console.log(fruits);
+    }
+});
+/** You can tap into the find method from our Fruit model we created. Think of this like
+ * your collection. Then you give the find method a callback and pass over an err for errors
+ * and an arbitrary name for the thing you are trying to return. In our case, it's a bunch of
+ * fruits so let's call it fruits.
+ */
+
+//updating one record in the mongo DB
+Fruit.updateOne({_id: "60c7b249b19ae02a238117d8"}, {name: "Banana"}, function(err) {
+    if (err) {
+        console.log("There was an error updating Fruit");
+    } else {
+        console.log("Updated Fruit successfully!");
+    }
+});
+/** First parameter is the query/record you're targeting, then it's the property, finally the callback */
+
+
 
 const app = express();
 
