@@ -33,23 +33,30 @@ const fruit = new Fruit({
     review: "Adding a peach"
 });
 
+const pineapple = new Fruit({
+    name: "Pineapple", 
+    score: 10, 
+    review: "Also Armando's favorite!"
+});
+
 //save info to db
-//fruit.save();
+pineapple.save();
 
 //db schema for a person
 const personSchema = new mongoose.Schema({
     name: String, 
-    age: Number
+    age: Number, 
+    favoriteFruit: fruitSchema
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 const person = new Person({
     name: "Armando Arteaga",
-    age: 28
+    age: 23
 });
 
-//person.save();
+person.save();
 
 
 //Retrieve data from DB
@@ -87,6 +94,14 @@ const person = new Person({
 // });
 /** First parameter is the query/record you're targeting, then it's the property, finally the callback */
 
+Person.updateOne({name: "Armando Arteaga"}, {favoriteFruit: pineapple}, function(err) {
+    if (err) {
+        console.log("There was an error updating Fruit");
+    } else {
+        console.log("Updated Armando's favorite Fruit successfully!");
+    }
+});
+
 //delete one from DB
 // Fruit.deleteOne({_id: "60ceb63554cdda52dc8d6bc9"}, function(err) {
 //     if (err) {
@@ -104,13 +119,13 @@ const person = new Person({
 //     }
 // });
 
-Person.deleteMany({name: "Armando Arteaga"}, function(err) {
+Fruit.deleteMany({name: "Pineapple"}, function(err) {
     if (err) {
         console.log("There was an error deleting many people");
     } else {
         console.log("Sucessfully deleted many people");
     }
-});
+}); 
 
 const app = express();
 
